@@ -41,7 +41,7 @@ app.get('/stock/:symbol', async (req, res) => {
       userId: userId
     }
 
-    await db.collection('stocks').doc(symbol).set(stockData)
+    await db.collection('stocks').add(stockData)
 
     res.json(stockData)
 
