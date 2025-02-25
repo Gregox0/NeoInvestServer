@@ -9,6 +9,7 @@ app.use(cors())
 
 app.get('/stock/:symbol', async (req, res) => {
   const symbol = req.params.symbol.toUpperCase()
+  const { userId } = req.query 
 
   try {
     const companyResponse = await fetch(`https://finnhub.io/api/v1/stock/profile2?symbol=${symbol}&token=${FINNHUB_API_KEY}`)
@@ -33,6 +34,7 @@ app.get('/stock/:symbol', async (req, res) => {
       appreciation: appreciation,
     }
 
+    await db.collection('stocks').doc(user).set(stockData)
     res.json(stockData)
 
   } catch (error) {
